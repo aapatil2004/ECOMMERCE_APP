@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@api/payu-hosted-checkout": "file:.api/apis/payu-hosted-checkout"
+  }
+}

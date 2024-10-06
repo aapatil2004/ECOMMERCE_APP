@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "apis": [
+    {
+      "identifier": "payu-hosted-checkout",
+      "source": "@payu-hosted-checkout/v1#93l841lyhac5f9",
+      "integrity": "sha512-id/tD99NUdt74a9CmPGwOnDrifoxk6pk48LaHXQo7AUaPswmqx6wq17dL6iN1pB97bNxpra8vIWXwFIgw6HIQA==",
+      "installerVersion": "6.1.2"
+    }
+  ]
+}
