@@ -1,0 +1,1436 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Payment Link",
+    "contact": {},
+    "version": "1.0"
+  },
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "servers": [
+    {
+      "url": "https://uatoneapi.payu.in",
+      "variables": {}
+    }
+  ],
+  "paths": {
+    "/payment-links": {
+      "post": {
+        "tags": [
+          "Misc"
+        ],
+        "summary": "CreatePaymentLinkAPI",
+        "description": "",
+        "operationId": "CreatePaymentLinkAPI",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "header",
+            "description": "This parameter must contain the merchant ID provided by PayU.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "title": "CreatePaymentLinkAPIRequest",
+                    "required": [
+                      "description",
+                      "source"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "invoiceNumber": {
+                        "type": "string",
+                        "description": "This parameter contains the unique string which is used for identifying a payment link. This must be alphanumeric.",
+                        "examples": [
+                          "INV8446471886220"
+                        ]
+                      },
+                      "isAmountFilledByCustomer": {
+                        "type": "boolean",
+                        "description": "This parameter contains any of the following values to specify whether it is an open invoices (when customer fills amount) or fixed amount:  * true - It is an open invoice where the customer can fill the amount. The subamount parameter must be null in this case.  * false - It is closed invoice and amount is fixed.",
+                        "default": false,
+                        "examples": [
+                          false
+                        ]
+                      },
+                      "subAmount": {
+                        "type": "integer",
+                        "description": "This parameter must contain the payment amount when the isAmountFilledByCustomer parameter is set to false. The value must be greater than or equal to 1.",
+                        "contentEncoding": "int64"
+                      },
+                      "minAmountForCustomer": {
+                        "type": "integer",
+                        "description": "This parameter contains the minimum amount a customer needs to pay in case of partial payment.",
+                        "contentEncoding": "int64"
+                      },
+                      "tax": {
+                        "type": "integer",
+                        "description": "This parameter must contain the tax amount for the payment transaction. This value must be greater than zero.",
+                        "contentEncoding": "int64",
+                        "examples": [
+                          10
+                        ]
+                      },
+                      "shippingCharge": {
+                        "type": "integer",
+                        "description": "This parameter must contain the shipping charges if any,",
+                        "contentEncoding": "int32",
+                        "examples": [
+                          10
+                        ]
+                      },
+                      "discount": {
+                        "type": "integer",
+                        "description": "This parameter must contains the discount given for the customer if any,",
+                        "contentEncoding": "int64",
+                        "examples": [
+                          10
+                        ]
+                      },
+                      "adjustment": {
+                        "type": "integer",
+                        "description": "This parameter must contains the adjustment amount if any,",
+                        "contentEncoding": "int64",
+                        "examples": [
+                          10
+                        ]
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "This parameter must contain the description or purpose of creating the.payment link.",
+                        "examples": [
+                          "10"
+                        ]
+                      },
+                      "source": {
+                        "type": "string",
+                        "description": "This parameter contains the source of payment generation.",
+                        "examples": [
+                          "API"
+                        ]
+                      },
+                      "isPartialPaymentAllowed": {
+                        "type": "boolean",
+                        "description": "This parameter indicates whether partial payments allowed using the payment link sent."
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "This parameter contains the currency code of the currency that is used for collecting the amount.",
+                        "examples": [
+                          "INR"
+                        ]
+                      },
+                      "maxPaymentsAllowed": {
+                        "type": "integer",
+                        "description": "This parameter contains the max number of payments allowed using the payment link shared by the merchant. For example, you can share same payment link to 10 customers or 100 customers based on the requirement.",
+                        "contentEncoding": "int32",
+                        "examples": [
+                          10
+                        ]
+                      },
+                      "batchId": {
+                        "type": "string",
+                        "description": "This parameter contains the batch ID of the payment link.",
+                        "examples": [
+                          "batch123"
+                        ]
+                      },
+                      "expiryDate": {
+                        "type": "string",
+                        "description": "This parameter contains the expiry date of the payment link in the  <yyyy-MM-dd HH:mm:ss>  format (will be 365 days in all other cases). For exaample, 2016-06-23 09:07:21"
+                      },
+                      "scheduledFor": {
+                        "type": "string",
+                        "description": "This parameter contains the reason for scheduling this payment link."
+                      },
+                      "customer": {
+                        "allOf": [
+                          {
+                            "title": "Customer3",
+                            "required": [
+                              "name",
+                              "email",
+                              "phone"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "phone": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {}
+                        ]
+                      },
+                      "address": {
+                        "allOf": [
+                          {
+                            "title": "Address2",
+                            "required": [
+                              "line1",
+                              "city",
+                              "state",
+                              "zipCode"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "line1": {
+                                "type": "string",
+                                "description": "This parameter contains the 1st line of the address."
+                              },
+                              "line2": {
+                                "type": "string",
+                                "description": "This parameter contains the 2nd line of the address."
+                              },
+                              "city": {
+                                "type": "string",
+                                "description": "This parameter contains the city in the address."
+                              },
+                              "state": {
+                                "type": "string",
+                                "description": "This parameter contains the state in the address."
+                              },
+                              "zipCode": {
+                                "type": "string",
+                                "description": "This parameter contains the zip code or PIN code for the address."
+                              }
+                            }
+                          },
+                          {}
+                        ]
+                      },
+                      "udf": {
+                        "allOf": [
+                          {
+                            "title": "Udf3",
+                            "type": "object",
+                            "properties": {
+                              "udf1": {
+                                "type": "string",
+                                "description": "This parameter contains the user-defined field information."
+                              },
+                              "udf2": {
+                                "type": "string",
+                                "description": "This parameter contains the user-defined field information."
+                              },
+                              "udf3": {
+                                "type": "string",
+                                "description": "This parameter contains the user-defined field information."
+                              },
+                              "udf4": {
+                                "type": "string",
+                                "description": "This parameter contains the user-defined field information."
+                              },
+                              "udf5": {
+                                "type": "string",
+                                "description": "This parameter contains the user-defined field information."
+                              }
+                            }
+                          },
+                          {}
+                        ]
+                      },
+                      "viaEmail": {
+                        "type": "string",
+                        "description": "This parameter is set to 1 to send the payment link via the email upon generation. Else, set to 0 (zero) so that email is not sent.",
+                        "examples": [
+                          "1"
+                        ]
+                      },
+                      "viaSms": {
+                        "type": "string",
+                        "description": "This parameter is set to 1 to send the payment link via the SMS upon generation. Else, set to 0 (zero) so that SMS is not sent.",
+                        "examples": [
+                          "1"
+                        ]
+                      },
+                      "emailTemplateName": {
+                        "type": "string",
+                        "description": "This parameter is contains the email template name that will be used when sending email."
+                      },
+                      "smsTemplateName": {
+                        "type": "string",
+                        "description": "This parameter is contains the SMS template name that will be used when sending SNS."
+                      },
+                      "timeUnit": {
+                        "type": "string",
+                        "description": "This parameter is contains the time unit used that is used while specifying the expiryDate."
+                      },
+                      "notes": {
+                        "type": "string",
+                        "description": "This parameter is contains the custom notes about the payment link."
+                      },
+                      "successURL": {
+                        "type": "string",
+                        "description": "The success URL, which is the page PayU will redirect to if the transaction is successful.",
+                        "examples": [
+                          "https://test-payment-middleware.payu.in/simulatorResponse"
+                        ]
+                      },
+                      "failureURL": {
+                        "type": "string",
+                        "description": "The Failure URL, which is the page PayU will redirect to if the transaction is failed.",
+                        "examples": [
+                          "https://test-payment-middleware.payu.in/simulatorResponse"
+                        ]
+                      },
+                      "customAttributes": {
+                        "type": "array",
+                        "items": {
+                          "title": "customAttributes",
+                          "required": [
+                            "custom1",
+                            "custom2"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "custom1": {
+                              "type": "string",
+                              "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+                            },
+                            "custom2": {
+                              "type": "string",
+                              "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+                            }
+                          },
+                          "description": "You can create any number of custom fields as per your requirements."
+                        },
+                        "description": "This parameter contains the customAttribute details in a JSON format."
+                      },
+                      "dropCategory": {
+                        "type": "string",
+                        "description": "This parameter can be used if you want to hide one or multiple payment options. For example, if you want to collect the payment using debit card and Net Banking, you can hide the credit card mode of payment.",
+                        "examples": [
+                          "DC|VISA|MAST"
+                        ]
+                      },
+                      "enforcePayment": {
+                        "type": "string",
+                        "description": "This parameter allows you to customize the payment options for each transaction. You can enforce specific payment modes, cards scheme, and specific banks under Net Banking using this method.",
+                        "examples": [
+                          "creditcard|debitcard"
+                        ]
+                      },
+                      "enforcePG": {
+                        "type": "string",
+                        "description": "This parameter allows you to enforce only a specific payment mode that you prefer.",
+                        "examples": [
+                          "CC"
+                        ]
+                      },
+                      "userToken": {
+                        "type": "string",
+                        "description": "This parameter must contain the user token if you are using a token for authentication."
+                      },
+                      "userCredentials": {
+                        "type": "string",
+                        "description": "This parameter must contain the user credentials if you are credetails for authentication."
+                      },
+                      "transactionId": {
+                        "type": "string",
+                        "description": "This parameter must contain the transaction ID of the transaction.",
+                        "examples": [
+                          "TXN1234567"
+                        ]
+                      },
+                      "cart_details": {
+                        "allOf": [
+                          {
+                            "title": "CartDetails3",
+                            "required": [
+                              "amount",
+                              "items",
+                              "sku_details"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "amount": {
+                                "type": "string",
+                                "description": "The cart total amount is specified in this field."
+                              },
+                              "items": {
+                                "type": "string",
+                                "description": "The number of items in this cart is specified in this field."
+                              },
+                              "sku_details": {
+                                "type": "array",
+                                "items": {
+                                  "title": "sku_details",
+                                  "required": [
+                                    "quantity",
+                                    "sku_id",
+                                    "sku_name",
+                                    "amount_per_sku"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "quantity": {
+                                      "type": "integer",
+                                      "description": "This field must contain the SKU quantity.",
+                                      "contentEncoding": "int32"
+                                    },
+                                    "sku_id": {
+                                      "type": "string",
+                                      "description": "This field must contain the SKU ID."
+                                    },
+                                    "sku_name": {
+                                      "type": "string",
+                                      "description": "This field must contain the SKU name."
+                                    },
+                                    "amount_per_sku": {
+                                      "type": "string",
+                                      "description": "This field must contain the amount per SKU."
+                                    },
+                                    "offer_key": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "description": "This field must contain the offer key and can contain multiple offer keys as an array."
+                                    },
+                                    "offer_auto_apply": {
+                                      "type": "boolean",
+                                      "description": "This field is used to indicate the offer is automatically applied. It is automatically applied if set to true."
+                                    }
+                                  },
+                                  "description": "This parameter contains the SKU details using custom fields."
+                                },
+                                "description": "This field contains SKU details as an object array."
+                              }
+                            }
+                          },
+                          {}
+                        ]
+                      },
+                      "aggregatorSplitInfo": {
+                        "allOf": [
+                          {
+                            "title": "AggregatorSplitInfo2",
+                            "required": [
+                              "type",
+                              "splitInfo"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "description": "This parameter must contain split type that is Absolute or Percentage."
+                              },
+                              "splitInfo": {
+                                "type": "object",
+                                "description": "This parameter must contain splitInfo details (Object)."
+                              }
+                            }
+                          },
+                          {}
+                        ]
+                      },
+                      "validationPeriod": {
+                        "type": "string",
+                        "description": "This parameter must contain the validation period of the transaction."
+                      }
+                    }
+                  },
+                  {}
+                ],
+                "contentMediaType": "application/json"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "parameters": []
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreatePaymentLinkAPIRequest": {
+        "title": "CreatePaymentLinkAPIRequest",
+        "required": [
+          "description",
+          "source"
+        ],
+        "type": "object",
+        "properties": {
+          "invoiceNumber": {
+            "type": "string",
+            "description": "This parameter contains the unique string which is used for identifying a payment link. This must be alphanumeric.",
+            "examples": [
+              "INV8446471886220"
+            ]
+          },
+          "isAmountFilledByCustomer": {
+            "type": "boolean",
+            "description": "This parameter contains any of the following values to specify whether it is an open invoices (when customer fills amount) or fixed amount:  * true - It is an open invoice where the customer can fill the amount. The subamount parameter must be null in this case.  * false - It is closed invoice and amount is fixed.",
+            "default": false,
+            "examples": [
+              false
+            ]
+          },
+          "subAmount": {
+            "type": "integer",
+            "description": "This parameter must contain the payment amount when the isAmountFilledByCustomer parameter is set to false. The value must be greater than or equal to 1.",
+            "contentEncoding": "int64"
+          },
+          "minAmountForCustomer": {
+            "type": "integer",
+            "description": "This parameter contains the minimum amount a customer needs to pay in case of partial payment.",
+            "contentEncoding": "int64"
+          },
+          "tax": {
+            "type": "integer",
+            "description": "This parameter must contain the tax amount for the payment transaction. This value must be greater than zero.",
+            "contentEncoding": "int64",
+            "examples": [
+              10
+            ]
+          },
+          "shippingCharge": {
+            "type": "integer",
+            "description": "This parameter must contain the shipping charges if any,",
+            "contentEncoding": "int32",
+            "examples": [
+              10
+            ]
+          },
+          "discount": {
+            "type": "integer",
+            "description": "This parameter must contains the discount given for the customer if any,",
+            "contentEncoding": "int64",
+            "examples": [
+              10
+            ]
+          },
+          "adjustment": {
+            "type": "integer",
+            "description": "This parameter must contains the adjustment amount if any,",
+            "contentEncoding": "int64",
+            "examples": [
+              10
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "This parameter must contain the description or purpose of creating the.payment link.",
+            "examples": [
+              "10"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "description": "This parameter contains the source of payment generation.",
+            "examples": [
+              "API"
+            ]
+          },
+          "isPartialPaymentAllowed": {
+            "type": "boolean",
+            "description": "This parameter indicates whether partial payments allowed using the payment link sent."
+          },
+          "currency": {
+            "type": "string",
+            "description": "This parameter contains the currency code of the currency that is used for collecting the amount.",
+            "examples": [
+              "INR"
+            ]
+          },
+          "maxPaymentsAllowed": {
+            "type": "integer",
+            "description": "This parameter contains the max number of payments allowed using the payment link shared by the merchant. For example, you can share same payment link to 10 customers or 100 customers based on the requirement.",
+            "contentEncoding": "int32",
+            "examples": [
+              10
+            ]
+          },
+          "batchId": {
+            "type": "string",
+            "description": "This parameter contains the batch ID of the payment link.",
+            "examples": [
+              "batch123"
+            ]
+          },
+          "expiryDate": {
+            "type": "string",
+            "description": "This parameter contains the expiry date of the payment link in the  <yyyy-MM-dd HH:mm:ss>  format (will be 365 days in all other cases). For exaample, 2016-06-23 09:07:21"
+          },
+          "scheduledFor": {
+            "type": "string",
+            "description": "This parameter contains the reason for scheduling this payment link."
+          },
+          "customer": {
+            "allOf": [
+              {
+                "title": "Customer3",
+                "required": [
+                  "name",
+                  "email",
+                  "phone"
+                ],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              },
+              {}
+            ]
+          },
+          "address": {
+            "allOf": [
+              {
+                "title": "Address2",
+                "required": [
+                  "line1",
+                  "city",
+                  "state",
+                  "zipCode"
+                ],
+                "type": "object",
+                "properties": {
+                  "line1": {
+                    "type": "string",
+                    "description": "This parameter contains the 1st line of the address."
+                  },
+                  "line2": {
+                    "type": "string",
+                    "description": "This parameter contains the 2nd line of the address."
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "This parameter contains the city in the address."
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "This parameter contains the state in the address."
+                  },
+                  "zipCode": {
+                    "type": "string",
+                    "description": "This parameter contains the zip code or PIN code for the address."
+                  }
+                }
+              },
+              {}
+            ]
+          },
+          "udf": {
+            "allOf": [
+              {
+                "title": "Udf3",
+                "type": "object",
+                "properties": {
+                  "udf1": {
+                    "type": "string",
+                    "description": "This parameter contains the user-defined field information."
+                  },
+                  "udf2": {
+                    "type": "string",
+                    "description": "This parameter contains the user-defined field information."
+                  },
+                  "udf3": {
+                    "type": "string",
+                    "description": "This parameter contains the user-defined field information."
+                  },
+                  "udf4": {
+                    "type": "string",
+                    "description": "This parameter contains the user-defined field information."
+                  },
+                  "udf5": {
+                    "type": "string",
+                    "description": "This parameter contains the user-defined field information."
+                  }
+                }
+              },
+              {}
+            ]
+          },
+          "viaEmail": {
+            "type": "string",
+            "description": "This parameter is set to 1 to send the payment link via the email upon generation. Else, set to 0 (zero) so that email is not sent.",
+            "examples": [
+              "1"
+            ]
+          },
+          "viaSms": {
+            "type": "string",
+            "description": "This parameter is set to 1 to send the payment link via the SMS upon generation. Else, set to 0 (zero) so that SMS is not sent.",
+            "examples": [
+              "1"
+            ]
+          },
+          "emailTemplateName": {
+            "type": "string",
+            "description": "This parameter is contains the email template name that will be used when sending email."
+          },
+          "smsTemplateName": {
+            "type": "string",
+            "description": "This parameter is contains the SMS template name that will be used when sending SNS."
+          },
+          "timeUnit": {
+            "type": "string",
+            "description": "This parameter is contains the time unit used that is used while specifying the expiryDate."
+          },
+          "notes": {
+            "type": "string",
+            "description": "This parameter is contains the custom notes about the payment link."
+          },
+          "successURL": {
+            "type": "string",
+            "description": "The success URL, which is the page PayU will redirect to if the transaction is successful.",
+            "examples": [
+              "https://test-payment-middleware.payu.in/simulatorResponse"
+            ]
+          },
+          "failureURL": {
+            "type": "string",
+            "description": "The Failure URL, which is the page PayU will redirect to if the transaction is failed.",
+            "examples": [
+              "https://test-payment-middleware.payu.in/simulatorResponse"
+            ]
+          },
+          "customAttributes": {
+            "type": "array",
+            "items": {
+              "title": "customAttributes",
+              "required": [
+                "custom1",
+                "custom2"
+              ],
+              "type": "object",
+              "properties": {
+                "custom1": {
+                  "type": "string",
+                  "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+                },
+                "custom2": {
+                  "type": "string",
+                  "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+                }
+              },
+              "description": "You can create any number of custom fields as per your requirements."
+            },
+            "description": "This parameter contains the customAttribute details in a JSON format."
+          },
+          "dropCategory": {
+            "type": "string",
+            "description": "This parameter can be used if you want to hide one or multiple payment options. For example, if you want to collect the payment using debit card and Net Banking, you can hide the credit card mode of payment.",
+            "examples": [
+              "DC|VISA|MAST"
+            ]
+          },
+          "enforcePayment": {
+            "type": "string",
+            "description": "This parameter allows you to customize the payment options for each transaction. You can enforce specific payment modes, cards scheme, and specific banks under Net Banking using this method.",
+            "examples": [
+              "creditcard|debitcard"
+            ]
+          },
+          "enforcePG": {
+            "type": "string",
+            "description": "This parameter allows you to enforce only a specific payment mode that you prefer.",
+            "examples": [
+              "CC"
+            ]
+          },
+          "userToken": {
+            "type": "string",
+            "description": "This parameter must contain the user token if you are using a token for authentication."
+          },
+          "userCredentials": {
+            "type": "string",
+            "description": "This parameter must contain the user credentials if you are credetails for authentication."
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "This parameter must contain the transaction ID of the transaction.",
+            "examples": [
+              "TXN1234567"
+            ]
+          },
+          "cart_details": {
+            "allOf": [
+              {
+                "title": "CartDetails3",
+                "required": [
+                  "amount",
+                  "items",
+                  "sku_details"
+                ],
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "The cart total amount is specified in this field."
+                  },
+                  "items": {
+                    "type": "string",
+                    "description": "The number of items in this cart is specified in this field."
+                  },
+                  "sku_details": {
+                    "type": "array",
+                    "items": {
+                      "title": "sku_details",
+                      "required": [
+                        "quantity",
+                        "sku_id",
+                        "sku_name",
+                        "amount_per_sku"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "quantity": {
+                          "type": "integer",
+                          "description": "This field must contain the SKU quantity.",
+                          "contentEncoding": "int32"
+                        },
+                        "sku_id": {
+                          "type": "string",
+                          "description": "This field must contain the SKU ID."
+                        },
+                        "sku_name": {
+                          "type": "string",
+                          "description": "This field must contain the SKU name."
+                        },
+                        "amount_per_sku": {
+                          "type": "string",
+                          "description": "This field must contain the amount per SKU."
+                        },
+                        "offer_key": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "This field must contain the offer key and can contain multiple offer keys as an array."
+                        },
+                        "offer_auto_apply": {
+                          "type": "boolean",
+                          "description": "This field is used to indicate the offer is automatically applied. It is automatically applied if set to true."
+                        }
+                      },
+                      "description": "This parameter contains the SKU details using custom fields."
+                    },
+                    "description": "This field contains SKU details as an object array."
+                  }
+                }
+              },
+              {}
+            ]
+          },
+          "aggregatorSplitInfo": {
+            "allOf": [
+              {
+                "title": "AggregatorSplitInfo2",
+                "required": [
+                  "type",
+                  "splitInfo"
+                ],
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "This parameter must contain split type that is Absolute or Percentage."
+                  },
+                  "splitInfo": {
+                    "type": "object",
+                    "description": "This parameter must contain splitInfo details (Object)."
+                  }
+                }
+              },
+              {}
+            ]
+          },
+          "validationPeriod": {
+            "type": "string",
+            "description": "This parameter must contain the validation period of the transaction."
+          }
+        }
+      },
+      "Customer": {
+        "title": "Customer",
+        "required": [
+          "name",
+          "email",
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        },
+        "description": "The customer details in a JSON format.",
+        "examples": [
+          {
+            "name": "kshitij",
+            "email": "kshitij.tomar@payu.in",
+            "phone": "7452892102"
+          }
+        ]
+      },
+      "Customer2": {
+        "title": "Customer2",
+        "required": [
+          "name",
+          "email",
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "This parameter must contain the customer name."
+          },
+          "email": {
+            "type": "string",
+            "description": "This parameter must contain the customer email."
+          },
+          "phone": {
+            "type": "string",
+            "description": "This parameter must contain the customer phone number."
+          }
+        }
+      },
+      "Address": {
+        "title": "Address",
+        "type": "object",
+        "properties": {
+          "line1": {
+            "type": "string",
+            "description": "This parameter contains the 1st line of the address."
+          },
+          "line2": {
+            "type": "string",
+            "description": "This parameter contains the 2nd line of the address."
+          },
+          "city": {
+            "type": "string",
+            "description": "This parameter contains the city in the address."
+          },
+          "state": {
+            "type": "string",
+            "description": "This parameter contains the state in the address."
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "This parameter contains the zip code or PIN code for the address."
+          }
+        },
+        "description": "This parameter contains the customer address to which the goods are delivered."
+      },
+      "udf": {
+        "title": "udf",
+        "type": "object",
+        "properties": {
+          "udf1": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf2": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf3": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf4": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf5": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          }
+        },
+        "description": "This parameter contains the UDF details in a JSON format."
+      },
+      "reminder": {
+        "title": "reminder",
+        "required": [
+          "isScheduled"
+        ],
+        "type": "object",
+        "properties": {
+          "isScheduled": {
+            "type": "boolean",
+            "description": "This parameter must be set to \"true\" if this payment link is scheduled, The type and channels must have values if this field is set to \"true.\""
+          },
+          "type": {
+            "type": "string",
+            "description": "This field use to indicate the reminder type and can contain any of the following: * 0 - Before expiry * 1: After link creation. By default, the value for this field is null."
+          },
+          "channels": {
+            "type": "string",
+            "description": "This field can contain any of the following: \"email\", \"phone\" or \"email\",\"phone\"",
+            "examples": [
+              "\"email\",\"phone\""
+            ]
+          }
+        },
+        "examples": [
+          {
+            "isScheduled": false,
+            "type": "0",
+            "channels": "[]"
+          }
+        ]
+      },
+      "customAttributes": {
+        "title": "customAttributes",
+        "required": [
+          "custom1",
+          "custom2"
+        ],
+        "type": "object",
+        "properties": {
+          "custom1": {
+            "type": "string",
+            "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+          },
+          "custom2": {
+            "type": "string",
+            "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+          }
+        },
+        "description": "You can create any number of custom fields as per your requirements."
+      },
+      "cart_details": {
+        "title": "cart_details",
+        "required": [
+          "amount",
+          "items",
+          "sku_details"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": "The cart total amount is specified in this field."
+          },
+          "items": {
+            "type": "string",
+            "description": "The number of items in this cart is specified in this field."
+          },
+          "sku_details": {
+            "type": "array",
+            "items": {
+              "title": "sku_details",
+              "required": [
+                "quantity",
+                "sku_id",
+                "sku_name",
+                "amount_per_sku"
+              ],
+              "type": "object",
+              "properties": {
+                "quantity": {
+                  "type": "integer",
+                  "description": "This field must contain the SKU quantity.",
+                  "contentEncoding": "int32"
+                },
+                "sku_id": {
+                  "type": "string",
+                  "description": "This field must contain the SKU ID."
+                },
+                "sku_name": {
+                  "type": "string",
+                  "description": "This field must contain the SKU name."
+                },
+                "amount_per_sku": {
+                  "type": "string",
+                  "description": "This field must contain the amount per SKU."
+                },
+                "offer_key": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "This field must contain the offer key and can contain multiple offer keys as an array."
+                },
+                "offer_auto_apply": {
+                  "type": "boolean",
+                  "description": "This field is used to indicate the offer is automatically applied. It is automatically applied if set to true."
+                }
+              },
+              "description": "This parameter contains the SKU details using custom fields."
+            },
+            "description": "This field contains SKU details as an object array."
+          }
+        },
+        "description": "This parameter contains the details of a cart in case of offers linked to this payment link."
+      },
+      "sku_details": {
+        "title": "sku_details",
+        "required": [
+          "quantity",
+          "sku_id",
+          "sku_name",
+          "amount_per_sku"
+        ],
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "description": "This field must contain the SKU quantity.",
+            "contentEncoding": "int32"
+          },
+          "sku_id": {
+            "type": "string",
+            "description": "This field must contain the SKU ID."
+          },
+          "sku_name": {
+            "type": "string",
+            "description": "This field must contain the SKU name."
+          },
+          "amount_per_sku": {
+            "type": "string",
+            "description": "This field must contain the amount per SKU."
+          },
+          "offer_key": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "This field must contain the offer key and can contain multiple offer keys as an array."
+          },
+          "offer_auto_apply": {
+            "type": "boolean",
+            "description": "This field is used to indicate the offer is automatically applied. It is automatically applied if set to true."
+          }
+        },
+        "description": "This parameter contains the SKU details using custom fields."
+      },
+      "aggregatorSplitInfo": {
+        "title": "aggregatorSplitInfo",
+        "required": [
+          "type",
+          "splitInfo"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "This parameter must contain split type that is Absolute or Percentage."
+          },
+          "splitInfo": {
+            "type": "object",
+            "description": "This parameter must contain splitInfo details (Object)."
+          }
+        },
+        "description": "This parameter contains the aggregator split info in case of Split Settlement transactions.",
+        "examples": [
+          {
+            "type": "string",
+            "splitInfo": {}
+          }
+        ]
+      },
+      "Address2": {
+        "title": "Address2",
+        "required": [
+          "line1",
+          "city",
+          "state",
+          "zipCode"
+        ],
+        "type": "object",
+        "properties": {
+          "line1": {
+            "type": "string",
+            "description": "This parameter contains the 1st line of the address."
+          },
+          "line2": {
+            "type": "string",
+            "description": "This parameter contains the 2nd line of the address."
+          },
+          "city": {
+            "type": "string",
+            "description": "This parameter contains the city in the address."
+          },
+          "state": {
+            "type": "string",
+            "description": "This parameter contains the state in the address."
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "This parameter contains the zip code or PIN code for the address."
+          }
+        }
+      },
+      "AggregatorSplitInfo2": {
+        "title": "AggregatorSplitInfo2",
+        "required": [
+          "type",
+          "splitInfo"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "This parameter must contain split type that is Absolute or Percentage."
+          },
+          "splitInfo": {
+            "type": "object",
+            "description": "This parameter must contain splitInfo details (Object)."
+          }
+        }
+      },
+      "CartDetails2": {
+        "title": "CartDetails2",
+        "required": [
+          "amount",
+          "items",
+          "sku_details"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": "The cart total amount is specified in this field."
+          },
+          "items": {
+            "type": "string",
+            "description": "The number of items in this cart is specified in this field."
+          },
+          "sku_details": {
+            "allOf": [
+              {
+                "title": "Offer_key",
+                "required": [
+                  "custom1",
+                  "custom2"
+                ],
+                "type": "object",
+                "properties": {
+                  "custom1": {
+                    "type": "string",
+                    "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+                  },
+                  "custom2": {
+                    "type": "string",
+                    "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+                  }
+                }
+              },
+              {}
+            ]
+          }
+        }
+      },
+      "Customer3": {
+        "title": "Customer3",
+        "required": [
+          "name",
+          "email",
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      },
+      "Offer_key": {
+        "title": "Offer_key",
+        "required": [
+          "custom1",
+          "custom2"
+        ],
+        "type": "object",
+        "properties": {
+          "custom1": {
+            "type": "string",
+            "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+          },
+          "custom2": {
+            "type": "string",
+            "description": "You can create custom fields in the customAttributes parameter. This parameter is for demo purpose only."
+          }
+        }
+      },
+      "Udf2": {
+        "title": "Udf2",
+        "required": [
+          "udf1",
+          "udf2",
+          "udf3",
+          "udf4",
+          "udf5"
+        ],
+        "type": "object",
+        "properties": {
+          "udf1": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf2": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf3": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf4": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf5": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          }
+        }
+      },
+      "CartDetails3": {
+        "title": "CartDetails3",
+        "required": [
+          "amount",
+          "items",
+          "sku_details"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": "The cart total amount is specified in this field."
+          },
+          "items": {
+            "type": "string",
+            "description": "The number of items in this cart is specified in this field."
+          },
+          "sku_details": {
+            "type": "array",
+            "items": {
+              "title": "sku_details",
+              "required": [
+                "quantity",
+                "sku_id",
+                "sku_name",
+                "amount_per_sku"
+              ],
+              "type": "object",
+              "properties": {
+                "quantity": {
+                  "type": "integer",
+                  "description": "This field must contain the SKU quantity.",
+                  "contentEncoding": "int32"
+                },
+                "sku_id": {
+                  "type": "string",
+                  "description": "This field must contain the SKU ID."
+                },
+                "sku_name": {
+                  "type": "string",
+                  "description": "This field must contain the SKU name."
+                },
+                "amount_per_sku": {
+                  "type": "string",
+                  "description": "This field must contain the amount per SKU."
+                },
+                "offer_key": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "This field must contain the offer key and can contain multiple offer keys as an array."
+                },
+                "offer_auto_apply": {
+                  "type": "boolean",
+                  "description": "This field is used to indicate the offer is automatically applied. It is automatically applied if set to true."
+                }
+              },
+              "description": "This parameter contains the SKU details using custom fields."
+            },
+            "description": "This field contains SKU details as an object array."
+          }
+        }
+      },
+      "Udf3": {
+        "title": "Udf3",
+        "type": "object",
+        "properties": {
+          "udf1": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf2": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf3": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf4": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          },
+          "udf5": {
+            "type": "string",
+            "description": "This parameter contains the user-defined field information."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "httpBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "httpBearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Misc",
+      "description": ""
+    }
+  ]
+}
